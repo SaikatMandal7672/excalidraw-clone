@@ -508,7 +508,12 @@ export default function ExcalidrawApp() {
               pushHistory(newEls);
               return newEls;
             });
-            setSelectedIds(new Set([el.id]));
+            // Don't auto-select freedraw strokes — keep drawing naturally
+            if (el.type !== 'freedraw') {
+              setSelectedIds(new Set([el.id]));
+            } else {
+              setSelectedIds(new Set());
+            }
           }
         }
         drawingElRef.current = null;
