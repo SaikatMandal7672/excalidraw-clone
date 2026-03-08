@@ -8,7 +8,7 @@ import {
   LineElement,
 } from '../types';
 import { GRID_SIZE, HANDLE_SIZE, SELECTION_PADDING } from './constants';
-import { getSelectionBounds, getElementBounds } from './geometry';
+import { getSelectionBounds } from './geometry';
 
 export interface RenderState {
   elements: ExcalidrawElement[];
