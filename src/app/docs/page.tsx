@@ -22,13 +22,13 @@ const sections = [
 function Code({ children, block }: { children: string; block?: boolean }) {
   if (block) {
     return (
-      <pre className="bg-zinc-900 text-gray-100 rounded-lg p-4 text-sm leading-relaxed overflow-x-auto my-4 border border-zinc-800">
+      <pre className="bg-[#0d1117] text-gray-200 rounded-xl p-5 text-[13px] leading-relaxed overflow-x-auto my-5 border border-zinc-800/60 shadow-sm">
         <code>{children}</code>
       </pre>
     );
   }
   return (
-    <code className="bg-gray-100 text-indigo-700 px-1.5 py-0.5 rounded text-[0.85em] font-mono">
+    <code className="bg-indigo-50 text-indigo-600 px-1.5 py-0.5 rounded-md text-[0.82em] font-mono font-medium">
       {children}
     </code>
   );
@@ -36,81 +36,84 @@ function Code({ children, block }: { children: string; block?: boolean }) {
 
 function H2({ id, children }: { id: string; children: React.ReactNode }) {
   return (
-    <h2 id={id} className="text-2xl font-bold text-gray-900 mt-16 mb-4 pt-4 border-t border-gray-200 scroll-mt-8">
+    <h2 id={id} className="text-[22px] font-bold text-gray-900 mt-16 mb-4 pt-6 border-t border-gray-100 scroll-mt-8 tracking-tight">
       {children}
     </h2>
   );
 }
 
 function H3({ children }: { children: React.ReactNode }) {
-  return <h3 className="text-lg font-semibold text-gray-800 mt-8 mb-3">{children}</h3>;
+  return <h3 className="text-[15px] font-semibold text-gray-800 mt-8 mb-3">{children}</h3>;
 }
 
 function P({ children }: { children: React.ReactNode }) {
-  return <p className="text-gray-600 leading-7 mb-4">{children}</p>;
+  return <p className="text-[15px] text-gray-500 leading-7 mb-4">{children}</p>;
 }
 
 function Callout({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="bg-indigo-50 border-l-4 border-indigo-500 rounded-r-lg px-5 py-4 my-6">
-      <div className="font-semibold text-indigo-800 mb-1">{title}</div>
-      <div className="text-indigo-700 text-sm leading-relaxed">{children}</div>
+    <div className="bg-gradient-to-r from-indigo-50 to-indigo-50/30 border border-indigo-100 rounded-xl px-5 py-4 my-6">
+      <div className="font-semibold text-indigo-700 mb-1 text-[13px]">{title}</div>
+      <div className="text-indigo-600/80 text-[13px] leading-relaxed">{children}</div>
     </div>
   );
 }
 
 function Warn({ children }: { children: React.ReactNode }) {
   return (
-    <div className="bg-amber-50 border-l-4 border-amber-500 rounded-r-lg px-5 py-4 my-6">
-      <div className="text-amber-800 text-sm leading-relaxed">{children}</div>
+    <div className="bg-gradient-to-r from-amber-50 to-amber-50/30 border border-amber-100 rounded-xl px-5 py-4 my-6">
+      <div className="text-amber-700 text-[13px] leading-relaxed">{children}</div>
     </div>
   );
 }
 
 function QA({ q, children }: { q: string; children: React.ReactNode }) {
   return (
-    <div className="mb-8">
-      <div className="font-semibold text-gray-900 mb-2">Q: {q}</div>
-      <div className="text-gray-600 leading-7 pl-4 border-l-2 border-gray-200">{children}</div>
+    <div className="mb-8 rounded-xl border border-gray-100 p-5">
+      <div className="font-semibold text-gray-900 mb-2 text-[14px]">Q: {q}</div>
+      <div className="text-gray-500 text-[14px] leading-7">{children}</div>
     </div>
   );
 }
 
 export default function DocsPage() {
   return (
-    <div className="flex min-h-screen bg-white">
+    <div className="flex min-h-screen bg-[#fafafa]" style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
       {/* Sidebar */}
-      <aside className="hidden lg:flex flex-col w-64 shrink-0 border-r border-gray-200 bg-gray-50 sticky top-0 h-screen overflow-y-auto p-6">
-        <Link href="/" className="text-lg font-black text-indigo-500 mb-6 no-underline" style={{ fontFamily: 'Caveat, cursive' }}>
+      <aside className="hidden lg:flex flex-col w-60 shrink-0 border-r border-gray-100 bg-white sticky top-0 h-screen overflow-y-auto px-5 py-8">
+        <Link href="/" className="text-xl font-black text-indigo-500 mb-8 no-underline tracking-tight" style={{ fontFamily: 'Caveat, cursive' }}>
           Excalidraw Clone
         </Link>
-        <nav className="flex flex-col gap-0.5">
+        <nav className="flex flex-col gap-px">
           {sections.map((s) => (
             <a
               key={s.id}
               href={`#${s.id}`}
-              className="text-[13px] text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 px-3 py-1.5 rounded-md no-underline transition-colors"
+              className="text-[12px] text-gray-400 hover:text-indigo-600 hover:bg-indigo-50/60 px-3 py-1.5 rounded-lg no-underline transition-all duration-150 font-medium"
             >
               {s.title}
             </a>
           ))}
         </nav>
-        <div className="mt-auto pt-6">
-          <Link href="/" className="text-sm text-indigo-600 hover:text-indigo-800 no-underline">
-            ← Back to App
+        <div className="mt-auto pt-8">
+          <Link href="/" className="text-[12px] text-indigo-500 hover:text-indigo-700 no-underline font-medium flex items-center gap-1.5">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
+            Back to App
           </Link>
         </div>
       </aside>
 
       {/* Content */}
-      <main className="flex-1 max-w-3xl mx-auto px-6 md:px-12 py-12">
-        <div className="mb-2">
-          <Link href="/" className="text-sm text-indigo-600 hover:text-indigo-800 no-underline lg:hidden">
-            ← Back to App
+      <main className="flex-1 max-w-[680px] mx-auto px-6 md:px-10 py-16">
+        <div className="mb-4">
+          <Link href="/" className="text-[12px] text-indigo-500 hover:text-indigo-700 no-underline font-medium lg:hidden flex items-center gap-1">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
+            Back to App
           </Link>
         </div>
-        <h1 className="text-4xl font-bold text-gray-900 mb-2 tracking-tight">Architecture Documentation</h1>
-        <p className="text-lg text-gray-500 mb-12">
+        <div className="mb-1 text-[11px] font-semibold uppercase tracking-[0.1em] text-indigo-500">Documentation</div>
+        <h1 className="text-3xl font-bold text-gray-900 mb-3 tracking-tight leading-tight">Architecture &amp; Internals</h1>
+        <p className="text-[15px] text-gray-400 mb-14 leading-relaxed">
           Complete internals of the Excalidraw Clone — from canvas rendering to Docker deployment.
         </p>
 
@@ -131,7 +134,7 @@ export default function DocsPage() {
         {/* ─── 2. Tech Stack ──────────────────────────────────────── */}
 
         <H2 id="tech-stack">Tech Stack</H2>
-        <div className="grid grid-cols-2 gap-3 my-4">
+        <div className="grid grid-cols-2 gap-2.5 my-5">
           {[
             ['Next.js 16', 'App Router, dynamic imports with ssr:false for canvas-heavy code'],
             ['React 19', 'Hooks, Context API, memo, refs for mutable state'],
@@ -142,9 +145,9 @@ export default function DocsPage() {
             ['Docker', 'Multi-stage build, standalone Next.js output, ~70MB image'],
             ['Vercel', 'Production hosting with automatic deployments from GitHub'],
           ].map(([name, desc]) => (
-            <div key={name} className="border border-gray-200 rounded-lg p-3">
-              <div className="font-semibold text-gray-900 text-sm">{name}</div>
-              <div className="text-gray-500 text-xs mt-0.5">{desc}</div>
+            <div key={name} className="border border-gray-100 rounded-xl p-3.5 bg-white">
+              <div className="font-semibold text-gray-900 text-[13px]">{name}</div>
+              <div className="text-gray-400 text-[11px] mt-0.5 leading-snug">{desc}</div>
             </div>
           ))}
         </div>
@@ -311,30 +314,30 @@ type ExcalidrawElement =
         <P>
           There are <strong>three</strong> coordinate spaces in this app:
         </P>
-        <div className="overflow-x-auto my-4">
-          <table className="min-w-full text-sm border border-gray-200 rounded-lg overflow-hidden">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="text-left px-4 py-2 font-semibold text-gray-700">Space</th>
-                <th className="text-left px-4 py-2 font-semibold text-gray-700">Description</th>
-                <th className="text-left px-4 py-2 font-semibold text-gray-700">Example</th>
+        <div className="overflow-x-auto my-5">
+          <table className="min-w-full text-[13px] border border-gray-100 rounded-xl overflow-hidden bg-white">
+            <thead>
+              <tr className="border-b border-gray-100">
+                <th className="text-left px-4 py-2.5 font-semibold text-gray-500 text-[11px] uppercase tracking-wider">Space</th>
+                <th className="text-left px-4 py-2.5 font-semibold text-gray-500 text-[11px] uppercase tracking-wider">Description</th>
+                <th className="text-left px-4 py-2.5 font-semibold text-gray-500 text-[11px] uppercase tracking-wider">Example</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-200">
+            <tbody className="divide-y divide-gray-50">
               <tr>
-                <td className="px-4 py-2 font-mono text-indigo-700">Client (Page)</td>
-                <td className="px-4 py-2 text-gray-600"><Code>e.clientX</Code>, <Code>e.clientY</Code> — relative to the browser viewport</td>
-                <td className="px-4 py-2 text-gray-600">Mouse cursor at (500, 300) on screen</td>
+                <td className="px-4 py-2.5 font-mono text-indigo-600 font-medium text-[12px]">Client (Page)</td>
+                <td className="px-4 py-2.5 text-gray-500"><Code>e.clientX</Code>, <Code>e.clientY</Code> — relative to the browser viewport</td>
+                <td className="px-4 py-2.5 text-gray-500">Mouse cursor at (500, 300) on screen</td>
               </tr>
               <tr>
-                <td className="px-4 py-2 font-mono text-indigo-700">Screen (Canvas)</td>
-                <td className="px-4 py-2 text-gray-600"><Code>clientX - rect.left</Code> — relative to the canvas element</td>
-                <td className="px-4 py-2 text-gray-600">If toolbar is 56px wide, screen X = 500 - 56 = 444</td>
+                <td className="px-4 py-2.5 font-mono text-indigo-600 font-medium text-[12px]">Screen (Canvas)</td>
+                <td className="px-4 py-2.5 text-gray-500"><Code>clientX - rect.left</Code> — relative to the canvas element</td>
+                <td className="px-4 py-2.5 text-gray-500">If toolbar is 56px wide, screen X = 500 - 56 = 444</td>
               </tr>
               <tr>
-                <td className="px-4 py-2 font-mono text-indigo-700">World (Scene)</td>
-                <td className="px-4 py-2 text-gray-600">The infinite canvas where elements live</td>
-                <td className="px-4 py-2 text-gray-600">A rectangle at world (1200, 800)</td>
+                <td className="px-4 py-2.5 font-mono text-indigo-600 font-medium text-[12px]">World (Scene)</td>
+                <td className="px-4 py-2.5 text-gray-500">The infinite canvas where elements live</td>
+                <td className="px-4 py-2.5 text-gray-500">A rectangle at world (1200, 800)</td>
               </tr>
             </tbody>
           </table>
@@ -447,22 +450,22 @@ mouseup   → commits the result (add element, push history), resets to 'idle'`}
           The original <Code>ExcalidrawApp.tsx</Code> was 940 lines. It was refactored into 6 custom hooks,
           bringing it down to ~160 lines. Each hook owns a single concern:
         </P>
-        <div className="overflow-x-auto my-4">
-          <table className="min-w-full text-sm border border-gray-200 rounded-lg overflow-hidden">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="text-left px-4 py-2 font-semibold text-gray-700">Hook</th>
-                <th className="text-left px-4 py-2 font-semibold text-gray-700">Responsibility</th>
-                <th className="text-left px-4 py-2 font-semibold text-gray-700">Key detail</th>
+        <div className="overflow-x-auto my-5">
+          <table className="min-w-full text-[13px] border border-gray-100 rounded-xl overflow-hidden bg-white">
+            <thead>
+              <tr className="border-b border-gray-100">
+                <th className="text-left px-4 py-2.5 font-semibold text-gray-500 text-[11px] uppercase tracking-wider">Hook</th>
+                <th className="text-left px-4 py-2.5 font-semibold text-gray-500 text-[11px] uppercase tracking-wider">Responsibility</th>
+                <th className="text-left px-4 py-2.5 font-semibold text-gray-500 text-[11px] uppercase tracking-wider">Key detail</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-200 text-gray-600">
-              <tr><td className="px-4 py-2 font-mono text-indigo-700">useHistory</td><td className="px-4 py-2">Undo/redo with snapshot stack</td><td className="px-4 py-2">Deep-clones entire elements array per snapshot via <Code>JSON.parse(JSON.stringify(...))</Code></td></tr>
-              <tr><td className="px-4 py-2 font-mono text-indigo-700">useViewport</td><td className="px-4 py-2">Zoom + pan math</td><td className="px-4 py-2">Clamps zoom between 0.1× and 20×, preserves world point under cursor</td></tr>
-              <tr><td className="px-4 py-2 font-mono text-indigo-700">useTextEditing</td><td className="px-4 py-2">Inline text editing lifecycle</td><td className="px-4 py-2">Manages a <Code>&lt;textarea&gt;</Code> ref, auto-sizes it, measures text width/height on commit</td></tr>
-              <tr><td className="px-4 py-2 font-mono text-indigo-700">useKeyboardShortcuts</td><td className="px-4 py-2">All keybindings</td><td className="px-4 py-2">Skips shortcuts when focus is in input/textarea/select</td></tr>
-              <tr><td className="px-4 py-2 font-mono text-indigo-700">useCanvasInteraction</td><td className="px-4 py-2">Mouse down/move/up + wheel</td><td className="px-4 py-2">Registers mousemove/mouseup on <Code>window</Code> so dragging works outside canvas bounds</td></tr>
-              <tr><td className="px-4 py-2 font-mono text-indigo-700">useRenderLoop</td><td className="px-4 py-2">requestAnimationFrame loop</td><td className="px-4 py-2">Reads from refs (not state) to avoid re-registering the loop</td></tr>
+            <tbody className="divide-y divide-gray-50 text-gray-500">
+              <tr><td className="px-4 py-2.5 font-mono text-indigo-600 font-medium text-[12px]">useHistory</td><td className="px-4 py-2.5">Undo/redo with snapshot stack</td><td className="px-4 py-2.5">Deep-clones entire elements array per snapshot via <Code>JSON.parse(JSON.stringify(...))</Code></td></tr>
+              <tr><td className="px-4 py-2.5 font-mono text-indigo-600 font-medium text-[12px]">useViewport</td><td className="px-4 py-2.5">Zoom + pan math</td><td className="px-4 py-2.5">Clamps zoom between 0.1× and 20×, preserves world point under cursor</td></tr>
+              <tr><td className="px-4 py-2.5 font-mono text-indigo-600 font-medium text-[12px]">useTextEditing</td><td className="px-4 py-2.5">Inline text editing lifecycle</td><td className="px-4 py-2.5">Manages a <Code>&lt;textarea&gt;</Code> ref, auto-sizes it, measures text width/height on commit</td></tr>
+              <tr><td className="px-4 py-2.5 font-mono text-indigo-600 font-medium text-[12px]">useKeyboardShortcuts</td><td className="px-4 py-2.5">All keybindings</td><td className="px-4 py-2.5">Skips shortcuts when focus is in input/textarea/select</td></tr>
+              <tr><td className="px-4 py-2.5 font-mono text-indigo-600 font-medium text-[12px]">useCanvasInteraction</td><td className="px-4 py-2.5">Mouse down/move/up + wheel</td><td className="px-4 py-2.5">Registers mousemove/mouseup on <Code>window</Code> so dragging works outside canvas bounds</td></tr>
+              <tr><td className="px-4 py-2.5 font-mono text-indigo-600 font-medium text-[12px]">useRenderLoop</td><td className="px-4 py-2.5">requestAnimationFrame loop</td><td className="px-4 py-2.5">Reads from refs (not state) to avoid re-registering the loop</td></tr>
             </tbody>
           </table>
         </div>
@@ -747,11 +750,12 @@ jobs:
           regardless of cursor position. This ensures drags never &quot;break&quot; at element boundaries.
         </QA>
 
-        <div className="mt-16 pt-8 border-t border-gray-200 text-center">
-          <Link href="/" className="text-indigo-600 hover:text-indigo-800 no-underline font-medium">
-            ← Back to App
+        <div className="mt-20 pt-8 border-t border-gray-100 text-center">
+          <Link href="/" className="text-indigo-500 hover:text-indigo-700 no-underline font-medium text-sm flex items-center justify-center gap-1.5">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
+            Back to App
           </Link>
-          <p className="text-gray-400 text-sm mt-4">Excalidraw Clone — Architecture Documentation</p>
+          <p className="text-gray-300 text-[11px] mt-6 font-medium tracking-wide">Excalidraw Clone</p>
         </div>
       </main>
     </div>

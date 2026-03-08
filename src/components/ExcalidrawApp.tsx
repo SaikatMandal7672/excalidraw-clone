@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useAppState } from '../context/AppContext';
 import {
   useHistory,
@@ -34,6 +34,7 @@ export default function ExcalidrawApp() {
   } = useAppState();
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [panelOpen, setPanelOpen] = useState(true);
 
   const { pushHistory, undo, redo, canUndo, canRedo } = useHistory();
   const { zoomAround, resetZoom } = useViewport();
@@ -126,7 +127,32 @@ export default function ExcalidrawApp() {
   );
 
   return (
-    <div className="flex w-screen h-screen overflow-hidden font-sans">
+    <div className={`relative w-screen h-screen overflow-hidden ${isDark ? 'dark' : ''}`}>
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 w-full h-full"
+        style={{ cursor }}
+        onMouseDown={handleMouseDown}
+        onWheel={handleWheel}
+      />
+
+      {editingEl ? (
+        <textarea
+          ref={textareaRef}
+          className="absolute bg-transparent border-[1.5px] border-dashed border-indigo-400 outline-none resize-none p-0 leading-[1.35] z-20 overflow-hidden whitespace-pre rounded-sm"
+          style={textareaStyle}
+          onBlur={commitTextEdit}
+          onKeyDown={(e) => { if (e.key === 'Escape') { e.preventDefault(); commitTextEdit(); } }}
+          onChange={(e) => {
+            const ta = e.currentTarget;
+            ta.style.height = 'auto';
+            ta.style.height = ta.scrollHeight + 'px';
+            ta.style.width = 'auto';
+            ta.style.width = Math.max(ta.scrollWidth, 100) + 'px';
+          }}
+        />
+      ) : null}
+
       <Toolbar
         tool={tool} onToolChange={setTool}
         onUndo={undo} onRedo={redo}
@@ -136,48 +162,23 @@ export default function ExcalidrawApp() {
         showGrid={showGrid} theme={theme} canUndo={canUndo} canRedo={canRedo}
       />
 
-      <div className="flex-1 relative overflow-hidden">
-        <canvas
-          ref={canvasRef}
-          className="absolute inset-0 w-full h-full"
-          style={{ cursor }}
-          onMouseDown={handleMouseDown}
-          onWheel={handleWheel}
-        />
-
-        {editingEl ? (
-          <textarea
-            ref={textareaRef}
-            className="absolute bg-transparent border-[1.5px] border-dashed border-blue-500 outline-none resize-none p-0 leading-[1.35] z-20 overflow-hidden whitespace-pre"
-            style={textareaStyle}
-            onBlur={commitTextEdit}
-            onKeyDown={(e) => { if (e.key === 'Escape') { e.preventDefault(); commitTextEdit(); } }}
-            onChange={(e) => {
-              const ta = e.currentTarget;
-              ta.style.height = 'auto';
-              ta.style.height = ta.scrollHeight + 'px';
-              ta.style.width = 'auto';
-              ta.style.width = Math.max(ta.scrollWidth, 100) + 'px';
-            }}
-          />
-        ) : null}
-
-        <ZoomControls
-          viewport={viewport} isDark={isDark}
-          onZoomIn={() => { const c = canvasRef.current; if (c) zoomAround(c.offsetWidth / 2, c.offsetHeight / 2, viewport.zoom * 1.2); }}
-          onZoomOut={() => { const c = canvasRef.current; if (c) zoomAround(c.offsetWidth / 2, c.offsetHeight / 2, viewport.zoom / 1.2); }}
-          onResetZoom={resetZoom}
-        />
-
-        <div className={`absolute bottom-4 right-4 text-[11px] pointer-events-none ${isDark ? 'text-zinc-600' : 'text-gray-400'}`}>
-          Ctrl+Scroll to zoom · Space+Drag to pan
-        </div>
-      </div>
-
       <PropertiesPanel
         selectedElements={selectedElements} properties={properties}
         onPropertyChange={handlePropertyChange} theme={theme}
+        open={panelOpen} onToggle={() => setPanelOpen((o) => !o)}
       />
+
+      <ZoomControls
+        viewport={viewport} isDark={isDark}
+        onZoomIn={() => { const c = canvasRef.current; if (c) zoomAround(c.offsetWidth / 2, c.offsetHeight / 2, viewport.zoom * 1.2); }}
+        onZoomOut={() => { const c = canvasRef.current; if (c) zoomAround(c.offsetWidth / 2, c.offsetHeight / 2, viewport.zoom / 1.2); }}
+        onResetZoom={resetZoom}
+      />
+
+      <div className={`absolute bottom-5 right-4 text-[10px] font-medium tracking-wide pointer-events-none select-none
+        ${isDark ? 'text-zinc-600' : 'text-gray-300'}`}>
+        Ctrl+Scroll to zoom &middot; Space+Drag to pan
+      </div>
     </div>
   );
 }
